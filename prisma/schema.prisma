@@ -1,11 +1,68 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+
 generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+
+model Type{
+  id String @id @default(uuid())
+  name String
+  image String
+  cars Car[]
+  
+}
+
+model Make{
+  id String @id @default(uuid())
+  name String
+  image String
+  cars Car[]
+ 
+}
+
+model Car{
+  id String @id @default(uuid())
+  makeId String
+  make Make @relation(fields: [makeId],references: [id])
+  typeId String
+  type Type @relation(fields: [typeId],references: [id])
+  year DateTime
+  color String
+  regNo String
+  rentalPrice String
+  price String
+  availability String
+  location String
+  mileage String
+  engineSize String
+  HP String
+  fuelType String
+  images Image[]
+
+   createdAt DateTime @default(now())
+   updatedAt DateTime @updatedAt
+
+   @@index([makeId])
+    @@index([typeId])
+}
+
+model Image{
+   id String @id @default(uuid())
+   carId String
+   car Car @relation(fields: [carId],references: [id])
+   url String
+
+   createdAt DateTime @default(now())
+   updatedAt DateTime @updatedAt
+
+   @@index([carId])
 }
