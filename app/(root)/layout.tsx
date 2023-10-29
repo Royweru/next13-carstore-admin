@@ -1,14 +1,15 @@
 import { Navbar } from "@/components/navbar";
 
-export default function RootLayout({
+export default function SetupLayout({
     children,
   }: {
     children: React.ReactNode;
   }) {
     return (
-      <div className=" w-full h-full">
-         
-          {children}
-      </div>
-    );
+      <>
+      <Navbar />
+        {children}
+      </>
+      )
   }
+  
