@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import prisma from "@/lib/prisma"
-import BodyTypeClient from './components/body-type-client'
+import BodyTypeClient from './components/client'
 const BodyTypePage =async () => {
     const data = await prisma.type.findMany()
   return (

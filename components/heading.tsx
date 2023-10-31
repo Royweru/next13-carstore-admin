@@ -10,10 +10,10 @@ const Heading:React.FC<HeadingProps> = ({
 }) => {
   return (
     <div className=' flex flex-col justify-start items-center'>  
-        <div className=' font-bold text-3xl text-black font-serif'>
+        <div className=' font-bold text-3xl text-black '>
            {title}
         </div>
-        <div className=' text-sm font-light font-serif text-neutral-400'>
+        <div className=' text-sm  font-normal font-serif text-neutral-400'>
           {desc}
         </div>
     </div>
