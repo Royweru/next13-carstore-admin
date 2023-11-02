@@ -7,10 +7,12 @@ import { Separator } from '@/components/ui/separator'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
-interface MakeProps{
-  data:Type[]
+import { DataTable } from '@/components/data-table'
+import { TypeColumn, columns } from './columns'
+interface BodyTypeClientProps{
+  data:TypeColumn[]
 }
-const MakeClient:React.FC<MakeProps> = ({
+const BodyTypeClient:React.FC<BodyTypeClientProps> = ({
   data
 }) => {
   const router = useRouter()
@@ -23,11 +25,11 @@ const MakeClient:React.FC<MakeProps> = ({
          Add new
       </Button>
      </div>
-
      <Separator/>
+     <DataTable columns={columns} data={data} entry='name'/>
     </>
    
   )
 }
 
-export default MakeClient
+export default BodyTypeClient

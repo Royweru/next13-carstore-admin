@@ -16,7 +16,7 @@ import { toast } from '@/components/ui/use-toast'
 import { Button } from '@/components/ui/button'
 import { Trash } from 'lucide-react'
 
-interface TypeFormProps{
+interface MakeFormProps{
     initialData:Type|null
 }
 
@@ -25,14 +25,14 @@ const formSchema = z.object({
     image:z.string().min(1),
 })
 
-type TypeFormValues = z.infer<typeof formSchema>
-const TypeForm:React.FC<TypeFormProps> = ({
+type MakeFormValues = z.infer<typeof formSchema>
+const MakeForm:React.FC<MakeFormProps> = ({
   initialData
 }) => {
   const router = useRouter()
   const params = useParams()
 
-  const form = useForm<TypeFormValues>({
+  const form = useForm<MakeFormValues>({
     resolver:zodResolver(formSchema),
     defaultValues:initialData||{
         name:"",
@@ -40,18 +40,18 @@ const TypeForm:React.FC<TypeFormProps> = ({
     }
   })
 const isLoading = form.formState.isSubmitting
-const toastMessage = initialData?"Body type successfully edited":"Body type was successfully added"
+const toastMessage = initialData?"Car Make successfully edited":"Car Make was successfully added"
 const action = initialData?"Edit":"Add"
-  const onSubmit =async (data:TypeFormValues)=>{
+  const onSubmit =async (data:MakeFormValues)=>{
     try {
       if(initialData){
-         await axios.patch(`/api/types/${params.typeId}`,data)
+         await axios.patch(`/api/makes/${params.MakeId}`,data)
       }else{
-        await axios.post('/api/types',data)
+        await axios.post('/api/makes',data)
       }
       form.reset()
       router.refresh()
-      router.push('/types')
+      router.push('/makes')
       toast({
         title:"Success!",
         description:toastMessage
@@ -67,12 +67,12 @@ const action = initialData?"Edit":"Add"
   }
   const onDelete = async()=>{
      try {
-        await axios.delete(`/api/types/${params.typeId}`)
+        await axios.delete(`/api/Makes/${params.MakeId}`)
         router.refresh()
-        router.push('/types')
+        router.push('/makes')
         toast({
           title:"Success",
-          description:"Body type deleted successfully!",
+          description:"Car Make deleted successfully!",
           duration:4000
         })
      } catch (error) {
@@ -87,7 +87,7 @@ const action = initialData?"Edit":"Add"
     <>
 
     <div className=' flex justify-between items-center'>
-        <Heading title='This is the form to fill for the car body type' desc='e.g sedan'/>
+        <Heading title='This is the form to fill for the car body Make' desc='e.g Mercedes Benz'/>
        {initialData&&(
         <Button onClick={onDelete} variant="destructive">
           <Trash  className=' w-4 h-4'/>
@@ -131,7 +131,7 @@ const action = initialData?"Edit":"Add"
                         Name:
                     </FormLabel>
                     <FormControl>
-                        <Input disabled={isLoading} placeholder='Body type name..'  {...field}/>
+                        <Input disabled={isLoading} placeholder='Car Make name..'  {...field}/>
                     </FormControl>
                     <FormMessage />
                 </FormItem>
@@ -150,4 +150,4 @@ const action = initialData?"Edit":"Add"
   )
 }
 
-export default TypeForm
+export default MakeForm
