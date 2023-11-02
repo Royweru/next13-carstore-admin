@@ -7,10 +7,10 @@ import { Separator } from '@/components/ui/separator'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
-interface MakeProps{
+interface BodyTypeClientProps{
   data:Type[]
 }
-const MakeClient:React.FC<MakeProps> = ({
+const BodyTypeClient:React.FC<BodyTypeClientProps> = ({
   data
 }) => {
   const router = useRouter()
@@ -30,4 +30,4 @@ const MakeClient:React.FC<MakeProps> = ({
   )
 }
 
-export default MakeClient
+export default BodyTypeClient

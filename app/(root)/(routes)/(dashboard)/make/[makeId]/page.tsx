@@ -1,7 +1,7 @@
 
 import React from 'react'
 import prisma from '@/lib/prisma'
-import TypeForm from './components/make-form'
+import TypeForm from './components/type-form'
 const TypeIdPage =async ({params}:{
     params:{typeId:string}
 }) => {
