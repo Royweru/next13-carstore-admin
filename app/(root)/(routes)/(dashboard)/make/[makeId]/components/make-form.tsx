@@ -45,13 +45,13 @@ const action = initialData?"Edit":"Add"
   const onSubmit =async (data:MakeFormValues)=>{
     try {
       if(initialData){
-         await axios.patch(`/api/makes/${params.MakeId}`,data)
+         await axios.patch(`/api/make/${params.makeId}`,data)
       }else{
-        await axios.post('/api/makes',data)
+        await axios.post('/api/make',data)
       }
       form.reset()
       router.refresh()
-      router.push('/makes')
+      router.push('/make')
       toast({
         title:"Success!",
         description:toastMessage
@@ -67,7 +67,7 @@ const action = initialData?"Edit":"Add"
   }
   const onDelete = async()=>{
      try {
-        await axios.delete(`/api/Makes/${params.MakeId}`)
+        await axios.delete(`/api/make/${params.MakeId}`)
         router.refresh()
         router.push('/makes')
         toast({

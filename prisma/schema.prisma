@@ -35,6 +35,7 @@ model Car{
   make Make @relation(fields: [makeId],references: [id])
   typeId String
   type Type @relation(fields: [typeId],references: [id])
+  model String
   year DateTime
   color String
   regNo String
@@ -45,6 +46,7 @@ model Car{
   mileage String
   engineSize String
   HP String
+  acceleration String
   fuelType String
   images Image[]
 
