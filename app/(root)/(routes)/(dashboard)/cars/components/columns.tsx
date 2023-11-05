@@ -7,17 +7,7 @@ import { ColumnDef } from "@tanstack/react-table"
 export type CarColumn= {
   id: string
   model:string,
-  color:string,
-  RegNo:string,
-  rentalPrice:string,
-  availability:string,
-  make:string,
-  type:string,
-  YOM:Date,
-  HorsePower:string,
-  engineSize:string,
-  fuelType:string,
-  purchasePrice:string
+
 }
 
 export const columns: ColumnDef<CarColumn>[] = [

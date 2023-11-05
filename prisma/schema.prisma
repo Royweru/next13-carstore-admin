@@ -41,12 +41,13 @@ model Car{
   regNo String
   rentalPrice Decimal
   price Decimal
-  availability String
+  isAvailable Boolean
+  isFeatured Boolean
   location String
-  mileage String
+  mileage Int
   engineSize String
-  HP String
-  acceleration String
+  HP Int
+  acceleration Decimal
   fuelType String
   images Image[]
 
