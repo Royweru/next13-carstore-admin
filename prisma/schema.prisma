@@ -39,8 +39,8 @@ model Car{
   year String
   color String
   regNo String
-  rentalPrice String
-  price String
+  rentalPrice Decimal
+  price Decimal
   availability String
   location String
   mileage String
@@ -60,7 +60,7 @@ model Car{
 model Image{
    id String @id @default(uuid())
    carId String
-   car Car @relation(fields: [carId],references: [id])
+   car Car @relation(fields: [carId],references: [id],onDelete: Cascade)
    url String
 
    createdAt DateTime @default(now())

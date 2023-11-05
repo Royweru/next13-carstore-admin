@@ -41,23 +41,23 @@ export async function PATCH(
 export async function DELETE(
   req:Request,
   {params}:{
-    params:{makeId:string}
+    params:{carId:string}
  }
 ) {
   try {
-    if(!params.makeId){
-      return new NextResponse("make id is required!")
+    if(!params.carId){
+      return new NextResponse("car id is required!")
     }
     
-    const make = await prisma.make.deleteMany({
+    const car = await prisma.car.deleteMany({
       where:{
-        id:params.makeId
+        id:params.carId
       }
     })
 
-    return NextResponse.json(make)
+    return NextResponse.json(car)
   } catch (error) {
-    console.log('MAKE-DELETE',error)
+    console.log('CAR-DELETE',error)
     return new NextResponse("internal err",{status:500})
   }
 

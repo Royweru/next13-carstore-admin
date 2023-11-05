@@ -136,7 +136,6 @@ const CarForm: React.FC<CarFormProps> = ({ initialData, makes, bodyTypes }) => {
         await axios.post("/api/cars", data);
       }
       form.reset();
-      router.refresh();
       router.push("/cars");
       toast({
         title: "Success!",
@@ -153,7 +152,7 @@ const CarForm: React.FC<CarFormProps> = ({ initialData, makes, bodyTypes }) => {
   };
   const onDelete = async () => {
     try {
-      await axios.delete(`/api/cars/${params.typeId}`);
+      await axios.delete(`/api/cars/${params.carId}`);
       router.refresh();
       router.push("/cars");
       toast({

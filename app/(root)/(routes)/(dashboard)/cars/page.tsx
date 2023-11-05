@@ -1,7 +1,7 @@
 import React from 'react'
 
 import prisma from "@/lib/prisma"
-import BodyTypeClient from './components/client'
+import BodyTypeClient from './[carId]/components/components/client'
 const CarPage =async () => {
     const data = await prisma.car.findMany({
         include:{
