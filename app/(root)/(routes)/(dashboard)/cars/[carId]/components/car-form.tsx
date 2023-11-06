@@ -13,6 +13,7 @@ import ImageUpload from "@/components/image-upload";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -30,6 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface CarFormProps {
   initialData:
@@ -44,18 +46,19 @@ interface CarFormProps {
 const formSchema = z.object({
   model: z.string().min(1),
   color: z.string().min(1),
-  acceleration: z.string().min(1),
-  regNo: z.string().default("none").optional(),
+  acceleration: z.coerce.number().min(1),
+  regNo: z.string().optional(),
   year: z.string().min(1),
-  availability: z.string().min(1),
+  isAvailable: z.boolean().default(false).optional(),
+  isFeatured:z.boolean().default(false).optional(),
   location: z.string().min(1),
   price: z.coerce.number().min(1),
   makeId: z.string().min(1),
   typeId: z.string().min(1),
   images: z.object({ url: z.string() }).array(),
   rentalPrice: z.coerce.number().min(1),
-  mileage: z.string().min(1),
-  HP: z.string().min(1),
+  mileage: z.coerce.number().min(1),
+  HP: z.coerce.number().min(1),
   engineSize: z.string().min(1),
   fuelType: z.string().min(1),
 });
@@ -103,6 +106,9 @@ const CarForm: React.FC<CarFormProps> = ({ initialData, makes, bodyTypes }) => {
           ...initialData,
           price: parseFloat(String(initialData?.price)),
           rentalPrice: parseFloat(String(initialData?.rentalPrice)),
+          acceleration:parseFloat(String(initialData?.acceleration)),
+          HP:parseInt(String(initialData?.HP)),
+          mileage:parseInt(String(initialData?.mileage))
         }
       : {
           model: "",
@@ -110,17 +116,18 @@ const CarForm: React.FC<CarFormProps> = ({ initialData, makes, bodyTypes }) => {
           typeId: "",
           images: [],
           color: "",
-          regNo: "",
+          regNo:"",
           rentalPrice: 0,
           price: 0,
-          HP: "",
-          availability: "",
+          HP: 0,
+          isAvailable: false,
+          isFeatured:false,
           location: "",
           fuelType: "",
           engineSize: "",
-          acceleration: "",
+          acceleration: 0,
           year: "",
-          mileage: "",
+          mileage: 0,
         },
   });
   const isLoading = form.formState.isSubmitting;
@@ -131,11 +138,12 @@ const CarForm: React.FC<CarFormProps> = ({ initialData, makes, bodyTypes }) => {
   const onSubmit = async (data: CarFormValues) => {
     try {
       if (initialData) {
-        await axios.patch(`/api/cars/${params.typeId}`, data);
+        await axios.patch(`/api/cars/${params.carId}`, data);
       } else {
         await axios.post("/api/cars", data);
       }
       form.reset();
+      router.refresh();
       router.push("/cars");
       toast({
         title: "Success!",
@@ -374,8 +382,9 @@ const CarForm: React.FC<CarFormProps> = ({ initialData, makes, bodyTypes }) => {
                   </FormLabel>
                   <FormControl>
                     <Input
+                     type="number"
                       disabled={isLoading}
-                      placeholder="horse power e.g 750HP.."
+                      placeholder="horse power e.g 750.."
                       {...field}
                     />
                   </FormControl>
@@ -413,7 +422,7 @@ const CarForm: React.FC<CarFormProps> = ({ initialData, makes, bodyTypes }) => {
                   <FormControl>
                     <Input
                       disabled={isLoading}
-                      placeholder="acceleration from o-100km/hr e.g 3.7 sec.."
+                      placeholder="acceleration from o-100km/hr e.g 3.7.."
                       {...field}
                     />
                   </FormControl>
@@ -448,10 +457,14 @@ const CarForm: React.FC<CarFormProps> = ({ initialData, makes, bodyTypes }) => {
                   <FormLabel className=" text-xl font-semibold  text-gray-900">
                     Mileage:
                   </FormLabel>
+                  <FormDescription>
+                    Mileage is in Km
+                  </FormDescription>
                   <FormControl>
                     <Input
+                     type="number"
                       disabled={isLoading}
-                      placeholder="Mileage of the car e.g 110km..."
+                      placeholder="Mileage of the car e.g 50..."
                       {...field}
                     />
                   </FormControl>
@@ -465,8 +478,11 @@ const CarForm: React.FC<CarFormProps> = ({ initialData, makes, bodyTypes }) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className=" text-xl font-semibold  text-gray-900">
-                    Registration Number*(optional):
+                    Registration Number:
                   </FormLabel>
+                  <FormDescription>
+                    If none write none
+                    </FormDescription>
                   <FormControl>
                     <Input
                       disabled={isLoading}
@@ -497,40 +513,8 @@ const CarForm: React.FC<CarFormProps> = ({ initialData, makes, bodyTypes }) => {
                 </FormItem>
               )}
             />
-            <FormField
-              name="availability"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className=" text-xl font-semibold  text-gray-900">
-                    Availability:
-                  </FormLabel>
-                  <Select
-                    disabled={isLoading}
-                    defaultValue={field.value}
-                    onValueChange={field.onChange}
-                    value={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder="Availability of the car"
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {availabilityOptions.map((option) => (
-                        <SelectItem key={option.id} value={option.available}>
-                          {option.available}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+           
+             
             <FormField
               name="price"
               control={form.control}
@@ -618,6 +602,42 @@ const CarForm: React.FC<CarFormProps> = ({ initialData, makes, bodyTypes }) => {
                       ))}
                     </SelectContent>
                   </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+             <FormField
+              name="isAvailable"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <Checkbox checked={field.value} onCheckedChange={field.onChange}/>
+                  <div className=" space-y-2 leading-none">
+                    <FormLabel>
+                      IsAvailable:
+                    </FormLabel>
+                    <FormDescription>
+                      This is to confirm the availability of the car
+                    </FormDescription>
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="isFeatured"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <Checkbox checked={field.value} onCheckedChange={field.onChange}/>
+                  <div className=" space-y-2 leading-none">
+                    <FormLabel>
+                      IsFeatured:
+                    </FormLabel>
+                    <FormDescription>
+                      This will determine wether the car will be displayed on the client website
+                    </FormDescription>
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}

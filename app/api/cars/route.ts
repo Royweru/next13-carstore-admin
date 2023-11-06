@@ -1,9 +1,16 @@
 import { NextResponse } from "next/server"
 import prisma from "@/lib/prisma"
+import { currentUser } from "@clerk/nextjs"
 export  async function POST(
     req:Request,
 ) {
     try {
+        const user = await currentUser()
+        
+       if(!user){
+        return new NextResponse("You are not authorized!")
+       }
+
         const body = await req.json()
         const{
             makeId,
@@ -15,7 +22,8 @@ export  async function POST(
             rentalPrice,
             price,
             acceleration,
-            availability,
+            isAvailable,
+            isFeatured,
             location,
             mileage,
             engineSize,
@@ -56,14 +64,8 @@ export  async function POST(
         if(!acceleration){
             return new NextResponse("Acceleration is required!")
         }
-        if(!availability){
-            return new NextResponse("Avalilaiblity is required!")
-        }
         if(!color){
             return new NextResponse("color is required!")
-        }
-        if(!regNo){
-            return new NextResponse("reg no is required")
         }
         if(!location){
             return new NextResponse("location is required")
@@ -89,7 +91,8 @@ export  async function POST(
                engineSize,
                model,
                acceleration,
-               availability,
+               isAvailable,
+               isFeatured,
                price,
                rentalPrice,
                regNo,

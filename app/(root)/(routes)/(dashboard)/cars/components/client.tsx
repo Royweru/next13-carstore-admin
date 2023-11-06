@@ -22,14 +22,14 @@ const CarClient:React.FC<CarClientProps> = ({
   return (
     <>
      <div className=' flex justify-between items-center w-full '>
-        <Heading title={`Cars avilable (${data.length})`} desc='This are the various car body types'/>
+        <Heading title={`Cars avilable (${data.length})`} desc='This are the various cars available'/>
       <Button onClick={()=>router.push(`/cars/new`)} className=' flex gap-x-4 items-center' variant="outline">
          <Plus size={15}/>
          Add new
       </Button>
      </div>
      <Separator/>
-     <DataTable columns={columns} data={data} entry='name'/>
+     <DataTable columns={columns} data={data} entry='model'/>
     </>
    
   )

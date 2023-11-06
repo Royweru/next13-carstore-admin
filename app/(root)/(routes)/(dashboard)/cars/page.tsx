@@ -2,6 +2,7 @@ import React from 'react'
 
 import prisma from "@/lib/prisma"
 import CarClient from './components/client'
+
 const CarPage =async () => {
     const data = await prisma.car.findMany({
         include:{
@@ -15,7 +16,18 @@ const CarPage =async () => {
       {
         id:car.id,
         model:car.model,
-      
+        make:car.make.name,
+        type:car.type.name,
+        color:car.color,
+        HorsePower:car.HP,
+        availability:car.isAvailable,
+        featured:car.isFeatured,
+        YOM:car.year,
+        purchasePrice:car.price.toNumber(),
+        rentalPrice:car.rentalPrice.toNumber(),
+        mileage:car.mileage,
+        fuelType:car.fuelType,
+        engineSize:car. engineSize
       }
     ))
   return (

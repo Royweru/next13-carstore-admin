@@ -1,5 +1,5 @@
 "use client"
-import Image from "next/image"
+
 import { ColumnDef } from "@tanstack/react-table"
 
 // This type is used to define the shape of our data.
@@ -7,18 +7,67 @@ import { ColumnDef } from "@tanstack/react-table"
 export type CarColumn= {
   id: string
   model:string,
-
+  engineSize:string, 
+  purchasePrice:number,
+  rentalPrice:number,
+  fuelType:string,
+  make:string,
+  type:string,
+  color:string,
+  HorsePower:number,
+  availability:boolean,
+  featured:boolean,
+  YOM:string,
+  mileage:number
 }
 
 export const columns: ColumnDef<CarColumn>[] = [
   {
-    accessorKey: "name",
-    header: "Name",
+    accessorKey: "model",
+    header: "Model",
   },
   {
-    accessorKey: "src",
-    header: "Image",
-  
+    accessorKey: "make",
+    header: "Make",
   },
-  
+  {
+    accessorKey: "type",
+    header: "Body Type",
+  },
+  {
+    accessorKey: "color",
+    header: "Color",
+  },
+  {
+    accessorKey: "HorsePower",
+    header: "HorsePower",
+  },
+  {
+    accessorKey: "availability",
+    header: "Available",
+  },
+  {
+    accessorKey: "featured",
+    header: "Featured",
+  },
+  {
+    accessorKey: "fuelType",
+    header: "FuelType",
+  },
+  {
+    accessorKey: "purchasePrice",
+    header: "PurchasePrice",
+  },
+  {
+    accessorKey: "rentalPrice",
+    header: "RentalPrice",
+  },
+  {
+    accessorKey: "YOM",
+    header: "Year of manufacture",
+  },
+  {
+    accessorKey: "engineSize",
+    header: "EngineSize",
+  },
 ]
