@@ -8,14 +8,15 @@ const CarPage =async () => {
         include:{
             make:true,
             type:true,
-            images:true
+            images:true,
+            model:true
         }
     })
 
     const formattedTypes = data.map(car=>(
       {
         id:car.id,
-        model:car.model,
+        model:car.model.name,
         make:car.make.name,
         type:car.type.name,
         color:car.color,

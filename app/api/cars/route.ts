@@ -111,7 +111,7 @@ export  async function GET(
     req:Request,
 ) {
     const {searchParams} = new URL(req.url)
-    const model = searchParams.get("model")||undefined
+    const modelId = searchParams.get("modelId")||undefined
     const typeId = searchParams.get("typeId")||undefined
     const makeId = searchParams.get("madeId")||undefined
     const yearOfManufacture = searchParams.get("yearOfManufacture")||undefined
@@ -120,7 +120,7 @@ export  async function GET(
     try {
         const car= await prisma.car.findMany({
             where:{
-                model,
+                modelId,
                 typeId,
                 makeId,
                 year:yearOfManufacture,

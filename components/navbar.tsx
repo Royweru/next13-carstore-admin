@@ -13,6 +13,7 @@ export const Navbar = () => {
   const navigation = [
     { title: "Body Type", path: "/types", active: pathname === "/types" },
     { title: "Make", path: "/make", active: pathname === "/make" },
+    { title: "Model", path: "/model", active: pathname === "/model" },
     { title: "Cars", path: "/cars", active: pathname === "/cars" },
   ];
 

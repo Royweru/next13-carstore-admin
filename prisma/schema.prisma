@@ -26,7 +26,18 @@ model Make{
   name String
   image String
   cars Car[]
+  models Model[]
  
+}
+
+model Model{
+  id String @id @default(uuid())
+  name String
+  makeId String
+  make Make @relation(fields: [makeId],references: [id],onDelete: Cascade)
+  cars Car[]
+
+  @@index([makeId])
 }
 
 model Car{
@@ -35,7 +46,8 @@ model Car{
   make Make @relation(fields: [makeId],references: [id])
   typeId String
   type Type @relation(fields: [typeId],references: [id])
-  model String
+  modelId String
+  model Model @relation(fields: [modelId],references: [id])
   year String
   color String
   regNo String
@@ -46,6 +58,8 @@ model Car{
   location String
   mileage Int
   engineSize String
+  drive String
+  transmission String
   HP Int
   acceleration Decimal
   fuelType String
@@ -56,6 +70,7 @@ model Car{
 
    @@index([makeId])
     @@index([typeId])
+    @@index([modelId])
 }
 
 model Image{

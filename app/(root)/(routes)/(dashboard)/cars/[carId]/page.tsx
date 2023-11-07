@@ -15,10 +15,11 @@ const CarIdPage =async ({params}:{
     })
     const makes = await prisma.make.findMany()
     const bodyTypes = await prisma.type.findMany()
+    const models = await prisma.model.findMany()
   return (
     <div className=' flex flex-col'>
       <div className=' flex-1 space-y-4 p-6'>
-         <CarForm initialData={data} makes={makes} bodyTypes={bodyTypes} />
+         <CarForm initialData={data} makes={makes} bodyTypes={bodyTypes} models={models}/>
       </div>
     </div>
   )

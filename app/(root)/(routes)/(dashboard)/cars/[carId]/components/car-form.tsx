@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Car, Image as ImageType, Make, Type } from "@prisma/client";
+import { Car, Image as ImageType, Make, Model, Type } from "@prisma/client";
 
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
@@ -41,10 +41,13 @@ interface CarFormProps {
     | null;
   makes: Make[] | null;
   bodyTypes: Type[];
+  models:Model[]
 }
 
 const formSchema = z.object({
-  model: z.string().min(1),
+  modelId: z.string().min(1),
+  transmission:z.string().min(1),
+  drive:z.string().min(1),
   color: z.string().min(1),
   acceleration: z.coerce.number().min(1),
   regNo: z.string().optional(),
@@ -90,12 +93,22 @@ export const availabilityOptions = [
   { id: 2, available: "On Maintainance" },
   { id: 3, available: "Yes" },
 ];
+export const transmissionOptions = [
+  { id: 1, transmission: "automatic" },
+  { id: 2, transmission: "manual" },
+  
+];
+export const driveOptions = [
+  { id: 1, drive: "4WD" },
+  { id: 2, drive: "AWD" },
+  { id: 3, drive: "2WD" },
+];
 export const fuelTypeOptions = [
   { id: 1, fuel: "gasoline" },
   { id: 2, fuel: "diesel" },
   { id: 3, fuel: "compressed natural gas" },
 ];
-const CarForm: React.FC<CarFormProps> = ({ initialData, makes, bodyTypes }) => {
+const CarForm: React.FC<CarFormProps> = ({ initialData, makes, bodyTypes,models }) => {
   const router = useRouter();
   const params = useParams();
 
@@ -111,7 +124,9 @@ const CarForm: React.FC<CarFormProps> = ({ initialData, makes, bodyTypes }) => {
           mileage:parseInt(String(initialData?.mileage))
         }
       : {
-          model: "",
+          modelId: "",
+          transmission:"",
+          drive:"",
           makeId: "",
           typeId: "",
           images: [],
@@ -320,21 +335,37 @@ const CarForm: React.FC<CarFormProps> = ({ initialData, makes, bodyTypes }) => {
                 </FormItem>
               )}
             />
-            <FormField
-              name="model"
+          <FormField
+              name="modelId"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className=" text-xl font-semibold  text-gray-900">
-                    Model:
+                    Model of the car:
                   </FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={isLoading}
-                      placeholder="model of the car e.g gle63.."
-                      {...field}
-                    />
-                  </FormControl>
+                  <Select
+                    disabled={isLoading}
+                    defaultValue={field.value}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue={field.value}
+                          placeholder="model of the car"
+                          className=" flex justify-between items-center"
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {models?.map((model) => (
+                        <SelectItem key={model.id} value={model.id}>
+                          {model.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -606,6 +637,77 @@ const CarForm: React.FC<CarFormProps> = ({ initialData, makes, bodyTypes }) => {
                 </FormItem>
               )}
             />
+            <FormField
+            name="drive"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className=" text-xl font-semibold  text-gray-900">
+                  Drive of the car:
+                </FormLabel>
+                <Select
+                  disabled={isLoading}
+                  defaultValue={field.value}
+                  onValueChange={field.onChange}
+                  value={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue
+                        defaultValue={field.value}
+                        placeholder="drive of the car"
+                        className=" flex justify-between items-center"
+                      />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {driveOptions?.map((option) => (
+                      <SelectItem key={option.id} value={option.drive}>
+                         {option.drive}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+              name="transmission"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className=" text-xl font-semibold  text-gray-900">
+                    Transimission of the car:
+                  </FormLabel>
+                  <Select
+                    disabled={isLoading}
+                    defaultValue={field.value}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue={field.value}
+                          placeholder="transimission of the car"
+                          className=" flex justify-between items-center"
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {transmissionOptions?.map((option) => (
+                        <SelectItem key={option.id} value={option.transmission}>
+                          {option.transmission}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          
              <FormField
               name="isAvailable"
               control={form.control}
