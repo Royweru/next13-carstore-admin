@@ -3,6 +3,38 @@ import prisma from '@/lib/prisma'
 import {  NextResponse } from 'next/server'
 import { currentUser } from '@clerk/nextjs'
 
+
+
+export async function GET(
+  {params}:{
+    params:{carId:string}
+  }
+) {
+  try {
+    const user = await currentUser()
+  if(!currentUser){
+    return new NextResponse("Unauthorized",{status:403})
+  }
+
+  const car = await prisma.car.findUnique({
+    where:{
+      id:params.carId
+    },
+    include:{
+      images:true,
+      make:true,
+      type:true
+    }
+  })
+    return NextResponse.json(car)
+  } catch (error) {
+    console.log('[CAR_GET]',error)
+    return new NextResponse("internal error!",{status:500})
+  }
+ 
+}
+
+
 export async function PATCH(
  req:Request,
  {params}:{
@@ -16,7 +48,7 @@ export async function PATCH(
           const user = await currentUser()
         
           if(!user){
-           return new NextResponse("You are not authorized!")
+           return new NextResponse("You are not authorized!",{status:403})
           }
    
            const body = await req.json()
@@ -130,6 +162,7 @@ export async function PATCH(
     }
     
 }
+
 
 export async function DELETE(
   req:Request,

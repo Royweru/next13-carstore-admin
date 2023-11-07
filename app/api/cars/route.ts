@@ -110,8 +110,33 @@ export  async function POST(
 export  async function GET(
     req:Request,
 ) {
+    const {searchParams} = new URL(req.url)
+    const model = searchParams.get("model")||undefined
+    const typeId = searchParams.get("typeId")||undefined
+    const makeId = searchParams.get("madeId")||undefined
+    const yearOfManufacture = searchParams.get("yearOfManufacture")||undefined
+    const color = searchParams.get("color")||undefined
+    const isFeatured = searchParams.get("isFeatured")
     try {
-        const car= await prisma.car.findMany()
+        const car= await prisma.car.findMany({
+            where:{
+                model,
+                typeId,
+                makeId,
+                year:yearOfManufacture,
+                color,
+                isFeatured:isFeatured?true:undefined,
+                isAvailable:true
+            },
+            include:{
+                images:true,
+                type:true,
+                make:true
+            },
+            orderBy:{
+                createdAt:"desc"
+            }
+        })
         return NextResponse.json(car)
     } catch (error) {
         console.log('[CAR-GET]',error)
