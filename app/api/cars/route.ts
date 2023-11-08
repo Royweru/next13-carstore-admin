@@ -15,7 +15,9 @@ export  async function POST(
         const{
             makeId,
             typeId,
-            model,
+            modelId,
+            transmission,
+            drive,
             year,
             color,
             regNo,
@@ -46,8 +48,8 @@ export  async function POST(
         if(!mileage){
             return new NextResponse("mileage is required!")
         }
-        if(!model){
-            return new NextResponse("model of the car is required!")
+        if(!modelId){
+            return new NextResponse("model id of the car is required!")
         }
         if(!rentalPrice){
             return new NextResponse("rental price is required!")
@@ -60,6 +62,12 @@ export  async function POST(
         }
         if(!HP){
             return new NextResponse("Horse power is required!")
+        }
+        if(!transmission){
+            return new NextResponse("transmission is required!")
+        }
+        if(!drive){
+            return new NextResponse("drive is required!")
         }
         if(!acceleration){
             return new NextResponse("Acceleration is required!")
@@ -89,11 +97,13 @@ export  async function POST(
                fuelType,
                mileage,
                engineSize,
-               model,
+               modelId,
                acceleration,
                isAvailable,
                isFeatured,
                price,
+               transmission,
+               drive,
                rentalPrice,
                regNo,
                HP,
