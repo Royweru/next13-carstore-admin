@@ -13,13 +13,22 @@ const CarIdPage =async ({params}:{
             images:true
         }
     })
-    const makes = await prisma.make.findMany()
+    const makes = await prisma.make.findMany({
+      include:{
+        models:true
+      }
+    })
+    const makeModels = makes.map(make=>(
+      make.models.map(model=>({
+        model
+      }))
+      ))
     const bodyTypes = await prisma.type.findMany()
     const models = await prisma.model.findMany()
   return (
     <div className=' flex flex-col'>
       <div className=' flex-1 space-y-4 p-6'>
-         <CarForm initialData={data} makes={makes} bodyTypes={bodyTypes} models={models}/>
+         <CarForm initialData={data} makes={makes} bodyTypes={bodyTypes} models={models} makeModels={makeModels}/>
       </div>
     </div>
   )
