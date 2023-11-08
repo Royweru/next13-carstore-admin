@@ -22,3 +22,14 @@ export  async function POST(
         return new NextResponse("Error",{status:500})
     }
 }
+export  async function GET(
+    req:Request,
+) {
+    try {
+        const model= await prisma.model.findMany()
+        return NextResponse.json(model)
+    } catch (error) {
+        console.log('[MODEL-GET]',error)
+        return new NextResponse("Error",{status:500})
+    }
+}

@@ -26,7 +26,11 @@ export  async function GET(
     req:Request,
 ) {
     try {
-        const Make= await prisma.make.findMany()
+        const Make= await prisma.make.findMany({
+            include:{
+                models:true
+            }
+        })
         return NextResponse.json(Make)
     } catch (error) {
         console.log('[MAKE-GET]',error)
