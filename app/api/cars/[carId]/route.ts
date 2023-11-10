@@ -6,6 +6,7 @@ import { currentUser } from '@clerk/nextjs'
 
 
 export async function GET(
+  req:Request,
   {params}:{
     params:{carId:string}
   }

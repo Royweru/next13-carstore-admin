@@ -124,7 +124,7 @@ export  async function GET(
     const modelId = searchParams.get("modelId")||undefined
     const typeId = searchParams.get("typeId")||undefined
     const makeId = searchParams.get("madeId")||undefined
-    const yearOfManufacture = searchParams.get("yearOfManufacture")||undefined
+    const yearOfManufacture = searchParams.get("YOM")||undefined
     const color = searchParams.get("color")||undefined
     const isFeatured = searchParams.get("isFeatured")
     try {
@@ -141,7 +141,8 @@ export  async function GET(
             include:{
                 images:true,
                 type:true,
-                make:true
+                make:true,
+                model:true
             },
             orderBy:{
                 createdAt:"desc"
