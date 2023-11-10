@@ -18,11 +18,7 @@ const CarIdPage =async ({params}:{
         models:true
       }
     })
-    const makeModels = makes.map(make=>(
-      make.models.map(model=>({
-        model
-      }))
-      ))
+  
     const bodyTypes = await prisma.type.findMany()
     const models = await prisma.model.findMany()
   return (
