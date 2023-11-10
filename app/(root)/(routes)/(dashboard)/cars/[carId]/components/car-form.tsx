@@ -42,7 +42,7 @@ interface CarFormProps {
   makes: Make[] | null;
   bodyTypes: Type[];
   models:Model[];
-  makeModels:Model[]
+  
 }
 
 const formSchema = z.object({
@@ -109,7 +109,7 @@ export const fuelTypeOptions = [
   { id: 2, fuel: "diesel" },
   { id: 3, fuel: "compressed natural gas" },
 ];
-const CarForm: React.FC<CarFormProps> = ({ initialData, makes, bodyTypes,models,makeModels }) => {
+const CarForm: React.FC<CarFormProps> = ({ initialData, makes, bodyTypes,models }) => {
   const router = useRouter();
   const params = useParams();
 

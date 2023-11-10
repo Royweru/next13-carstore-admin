@@ -28,7 +28,7 @@ const CarIdPage =async ({params}:{
   return (
     <div className=' flex flex-col'>
       <div className=' flex-1 space-y-4 p-6'>
-         <CarForm initialData={data} makes={makes} bodyTypes={bodyTypes} models={models} makeModels={makeModels}/>
+         <CarForm initialData={data} makes={makes} bodyTypes={bodyTypes} models={models}/>
       </div>
     </div>
   )
