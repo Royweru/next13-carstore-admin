@@ -123,7 +123,7 @@ export  async function GET(
     const {searchParams} = new URL(req.url)
     const modelId = searchParams.get("modelId")||undefined
     const typeId = searchParams.get("typeId")||undefined
-    const makeId = searchParams.get("madeId")||undefined
+    const makeId = searchParams.get("makeId")||undefined
     const yearOfManufacture = searchParams.get("YOM")||undefined
     const color = searchParams.get("color")||undefined
     const isFeatured = searchParams.get("isFeatured")

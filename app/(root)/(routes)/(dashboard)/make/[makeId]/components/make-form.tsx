@@ -50,8 +50,8 @@ const action = initialData?"Edit":"Add"
         await axios.post('/api/make',data)
       }
       form.reset()
-      router.refresh()
       router.push('/make')
+      router.refresh()
       toast({
         title:"Success!",
         description:toastMessage

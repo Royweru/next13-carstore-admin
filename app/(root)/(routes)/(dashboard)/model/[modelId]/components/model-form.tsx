@@ -66,7 +66,7 @@ const ModelForm: React.FC<ModelFormProps> = ({ initialData,makes }) => {
       }
       form.reset();
       router.refresh();
-      router.push("/model");
+      
       toast({
         title: "Success!",
         description: toastMessage,
