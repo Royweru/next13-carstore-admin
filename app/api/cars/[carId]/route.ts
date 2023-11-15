@@ -24,7 +24,8 @@ export async function GET(
     include:{
       images:true,
       make:true,
-      type:true
+      type:true,
+      model:true
     }
   })
     return NextResponse.json(car)
